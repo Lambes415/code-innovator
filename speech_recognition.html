@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Speech Recognition</title>
+    <style>
+        body {
+            background: linear-gradient(to right, #0e1c36, #2e0f4d);
+            color: white;
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Navbar styles */
+        #navbar {
+            background-color: #1c1e28;
+            padding: 15px;
+            display: flex;
+            justify-content: space-around;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        #navbar a {
+            color: white;
+            text-decoration: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
+
+        #navbar a:hover {
+            background-color: #007BFF;
+        }
+
+        /* Styles for the chatbot */
+        #chatbot {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 60px;
+            height: 60px;
+            background-color: #007BFF;
+            border-radius: 50%;
+            color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            font-size: 30px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+            z-index: 1000;
+            transition: transform 0.3s;
+        }
+
+        #chatbot:hover {
+            transform: scale(1.1);
+        }
+
+        #chatbox {
+            display: none;
+            position: fixed;
+            bottom: 80px;
+            right: 20px;
+            width: 300px;
+            background-color: white;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+            z-index: 1001;
+        }
+
+        #chatbox-header {
+            background-color: #007BFF;
+            color: white;
+            padding: 10px;
+            border-top-left-radius: 8px;
+            border-top-right-radius: 8px;
+        }
+
+        #chatbox-body {
+            padding: 10px;
+            max-height: 200px;
+            overflow-y: auto;
+        }
+
+        button {
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 18px;
+            transition: background-color 0.3s;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation bar -->
+    <div class="navbar" id="navbar">
+        <a href="{{ url_for('view_patients') }}" id="view_patients">View Patients</a>
+        <a href="{{ url_for('display_health_risk', name='', age='', health_risk='') }}" id="health_risk">Health Risk</a>
+        <a href="{{ url_for('patient_form') }}" id="go_back_home">Go Back home</a>
+        <a href="{{ url_for('time_series_analysis') }}" id="time_series_analysis">Time Series Analysis</a>
+    </div>
+
+    <h1>Speech Recognition</h1>
+    <form method="POST">
+        <button type="button" id="start-speech">Start Speaking</button>
+    </form>
+    {% if spoken_text %}
+        <h2>You said: {{ spoken_text }}</h2>
+    {% endif %}
+
+    <!-- Chatbot Icon -->
+    <div id="chatbot">💬</div>
+
+    <!-- Chatbox -->
+    <div id="chatbox">
+        <div id="chatbox-header">Chatbot</div>
+        <div id="chatbox-body"></div>
+        <input type="text" id="user-input" placeholder="Type your message..." />
+    </div>
+
+    <script>
+        // Chatbot functionality
+        const chatbot = document.getElementById('chatbot');
+        const chatbox = document.getElementById('chatbox');
+        const chatboxBody = document.getElementById('chatbox-body');
+        const userInput = document.getElementById('user-input');
+
+        chatbot.onclick = () => {
+            chatbox.style.display = chatbox.style.display === 'none' || chatbox.style.display === '' ? 'block' : 'none';
+        };
+
+        // Speech Recognition functionality
+        const speechButton = document.getElementById('start-speech');
+        const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+        const recognition = new SpeechRecognition();
+        recognition.lang = 'en-US';
+
+        speechButton.onclick = function () {
+            recognition.start();
+        };
+
+        recognition.onresult = function (event) {
+            const spokenWords = event.results[0][0].transcript.toLowerCase();
+            if (spokenWords.includes('view patients')) {
+                window.location.href = document.getElementById('view_patients').href;
+            } else if (spokenWords.includes('health risk')) {
+                window.location.href = document.getElementById('health_risk').href;
+            } else if (spokenWords.includes('go back home')) {
+                window.location.href = document.getElementById('go_back_home').href;
+            } else if (spokenWords.includes('time series analysis')) {
+                window.location.href = document.getElementById('time_series_analysis').href;
+            } else {
+                alert("Command not recognized: " + spokenWords);
+            }
+        };
+
+        recognition.onerror = function (event) {
+            alert("Error occurred in speech recognition: " + event.error);
+        };
+    </script>
+</body>
+</html>

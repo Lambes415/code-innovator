@@ -10,16 +10,16 @@ AI-based Comprehensive Patient Management System designed to store and manage pa
 •	Using Natural Language Processing (NLP) for text-based data extraction from health records. 
 ![Screenshot (16)](https://github.com/user-attachments/assets/5e8f8d0c-f77d-4d23-a4e5-7335be038f82)
 # Team Members
-WT Shingube 
-K Mashau 
-TR MALAPILE
-RS Nkuna 
-KD LEWELE 
-VP Baloyi 
-MLM MKABILE
-SibusisoMnamathi1
-KD Sehlabaka 
-LF Malambe
+- WT Shingube 
+- K Mashau 
+- TR MALAPILE
+- RS Nkuna 
+- KD LEWELE 
+- VP Baloyi 
+- MLM MKABILE
+- SM Mnamathi
+- KD Sehlabaka 
+- LF Malambe
 # Technlogies
 - Python: For backend development and integration of AI models.  
 - TensorFlow/Keras: For building the deep learning models used in predictive analysis.  

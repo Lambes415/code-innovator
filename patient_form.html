@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Patient Form</title>
+    <style>
+        /* Style for the popup message */
+        #popup {
+            visibility: hidden;
+            background-color: #4CAF50;
+            color: white;
+            text-align: center;
+            padding: 15px;
+            position: fixed;
+            top: 20px;
+            width: 100%;
+            z-index: 100;
+            font-size: 20px;
+        }
+
+        /* Styles for the chatbot */
+        #chatbot {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 50px;
+            height: 50px;
+            background-color: #007BFF;
+            border-radius: 50%;
+            color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            font-size: 24px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+            z-index: 1000;
+        }
+
+        #chatbox {
+            display: none;
+            position: fixed;
+            bottom: 80px;
+            right: 20px;
+            width: 300px;
+            background-color: white;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+            z-index: 1001;
+        }
+
+        #chatbox-header {
+            background-color: #007BFF;
+            color: white;
+            padding: 10px;
+            border-top-left-radius: 8px;
+            border-top-right-radius: 8px;
+        }
+
+        #chatbox-body {
+            padding: 10px;
+            max-height: 200px;
+            overflow-y: auto;
+        }
+
+        .message {
+            margin: 5px 0;
+            padding: 5px;
+            border-radius: 5px;
+        }
+
+        .user-message {
+            background-color: #007BFF;
+            color: white;
+            text-align: right;
+        }
+
+        .bot-message {
+            background-color: #f1f1f1;
+            color: black;
+        }
+
+        .menu-button {
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            padding: 5px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 5px 0;
+        }
+        body {
+            background: linear-gradient(to right, #0e1c36, #2e0f4d);
+            color: white;
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Navbar styles */
+        #navbar {
+            background-color: #1c1e28;
+            padding: 15px;
+            display: flex;
+            justify-content: space-around;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        #navbar a {
+            color: white;
+            text-decoration: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
+
+        #navbar a:hover {
+            background-color: #007BFF;
+        }
+    </style>
+</head>
+<body>
+     <!-- Navigation bar -->
+     <div class="navbar" id="navbar">
+        <a href="{{ url_for('view_patients') }}">View Patients</a>
+        <a href="{{ url_for('display_health_risk', name='', age='', health_risk='') }}">Health Risk</a>
+        <a href="{{ url_for('speech_recognition') }}">Speech Recognition</a>
+        <a href="{{ url_for('time_series_analysis') }}">Time Series Analysis</a>
+    </div>
+    <h1 style="text-align: center;">Patient Medical History Form</h1>
+    {% if success %}
+    <p>Patient captured successfully!</p>
+    {% endif %}
+    <form action="{{ url_for('save_data') }}" method="POST" style="max-width: 600px; margin: 0 auto; padding: 20px; border: 1px solid #ccc; border-radius: 10px; box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);padding-left: 6%;padding-right: 6%;">
+        
+        <label for="name">Name:</label><br>
+        <input type="text" id="name" name="name" required style="width: 100%; padding: 10px; margin: 15px 0; border-radius: 5px; border: 1px solid #ccc; "><br>
+        
+        <label for="age">Age:</label><br>
+        <input type="number" id="age" name="age" required style="width: 100%; padding: 10px; margin: 5px 0; border-radius: 5px; border: 1px solid #ccc;"><br>
+        
+        <label for="medications">Number of Medications:</label><br>
+        <input type="number" id="medications" name="medications" style="width: 100%; padding: 10px; margin: 5px 0; border-radius: 5px; border: 1px solid #ccc;" 
+            oninput="validateMedications(this)">
+        <span id="medications-error" style="color: red; display: none;">Please enter a valid number.</span><br>
+        
+        <script>
+        function validateMedications(input) {
+            const errorSpan = document.getElementById('medications-error');
+            if (input.value.trim() === '' || isNaN(input.value) || input.value < 0) {
+                errorSpan.style.display = 'inline';
+            } else {
+                errorSpan.style.display = 'none';
+            }
+        }
+        </script>
+        
+        
+        <label for="surgeries">Surgeries:</label><br>
+        <input type="text" id="surgeries" name="surgeries" style="width: 100%; padding: 10px; margin: 5px 0; border-radius: 5px; border: 1px solid #ccc;"><br>
+        
+        <label for="health_events">Health Events:</label><br>
+        <input type="text" id="health_events" name="health_events" style="width: 100%; padding: 10px; margin: 5px 0; border-radius: 5px; border: 1px solid #ccc;"><br>
+        
+        <button type="submit" style="background-color: #4CAF50; color: white; padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer; font-size: 16px;">Save Patient</button>
+    </form>
+
+   
+
+    <!-- Popup message div -->
+    <div id="popup">New patient has been captured successfully!</div>
+
+    <!-- Chatbot Icon -->
+    <div id="chatbot">💬</div>
+
+    <!-- Chatbox -->
+    <div id="chatbox">
+        <div id="chatbox-header">Chatbot</div>
+        <div id="chatbox-body"></div>
+        <input type="text" id="user-input" placeholder="Type your message..." />
+    </div>
+
+    <script>
+        // Check if the form submission was successful
+        const success = "{{ success }}";
+
+        if (success === "True") {
+            // Show the popup message
+            const popup = document.getElementById('popup');
+            popup.style.visibility = 'visible';
+
+            // Hide the popup after 5 seconds
+            setTimeout(() => {
+                popup.style.visibility = 'hidden';
+            }, 5000);
+
+            // Voice synthesis to announce the message
+            const message = "New patient has been captured successfully";
+            const speech = new SpeechSynthesisUtterance(message);
+            speech.lang = 'en-US';
+            window.speechSynthesis.speak(speech);
+        }
+
+        // Chatbot functionality
+        const chatbot = document.getElementById('chatbot');
+        const chatbox = document.getElementById('chatbox');
+        const chatboxBody = document.getElementById('chatbox-body');
+        const userInput = document.getElementById('user-input');
+
+        chatbot.onclick = () => {
+            chatbox.style.display = chatbox.style.display === 'none' || chatbox.style.display === '' ? 'block' : 'none';
+            if (chatbox.style.display === 'block') {
+                chatboxBody.innerHTML = ''; // Clear previous messages
+                addMessage("Hello! How can I assist you today?", 'bot-message');
+                addMenuButton();
+            }
+        };
+
+        userInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                const userMessage = userInput.value.trim();
+                if (userMessage) {
+                    addMessage(userMessage, 'user-message');
+                    handleUserMessage(userMessage);
+                    userInput.value = '';
+                }
+            }
+        });
+
+        function addMessage(message, className) {
+            const messageDiv = document.createElement('div');
+            messageDiv.className = `message ${className}`;
+            messageDiv.innerText = message;
+            chatboxBody.appendChild(messageDiv);
+            chatboxBody.scrollTop = chatboxBody.scrollHeight; // Scroll to the bottom
+        }
+
+        function addMenuButton() {
+            const button = document.createElement('button');
+            button.className = 'menu-button';
+            button.innerText = 'Menu';
+            button.onclick = displayQuestions;
+            chatboxBody.appendChild(button);
+        }
+
+        function displayQuestions() {
+            const questions = [
+                "What is your name?",
+                "What medications are you taking?",
+                "Have you had any surgeries?",
+                "Do you have any allergies?",
+                "What is your age?"
+            ];
+            questions.forEach((question, index) => {
+                const button = document.createElement('button');
+                button.className = 'menu-button';
+                button.innerText = question;
+                button.onclick = () => handleQuestionChoice(index);
+                chatboxBody.appendChild(button);
+            });
+        }
+
+        function handleQuestionChoice(index) {
+            const responses = [
+                "Please fill out the form to get ahead.",
+                "good enter the medication on the form and fill it out for more clarity.",
+                "yes thats use the form to check risk based on your surgery.",
+                "Please mention any known allergies.",
+                "Age is an important detail; please provide it in the age input field to see the risk."
+            ];
+            addMessage(responses[index], 'bot-message');
+        }
+
+        function handleUserMessage(message) {
+            const lowerCaseMessage = message.toLowerCase();
+            if (lowerCaseMessage === "hello" || lowerCaseMessage === "hi") {
+                addMessage("Hi there! How can I assist you?", 'bot-message');
+                addMenuButton();
+            } else {
+                addMessage("I'm here to help! Please ask your question or type 'Menu' to see options.", 'bot-message');
+            }
+        }
+    </script>
+</body>
+</html>

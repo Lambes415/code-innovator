@@ -1,5 +1,5 @@
 # Name of the group code-innovator
- aims to explore and implement new coding paradigms, tools, and techniques to streamline the development process and enhance productivity.
+Aims to explore and implement new coding paradigms, tools, and techniques to streamline the development process and enhance productivity.
 # Comprehensive Patient Management System
 AI-based Comprehensive Patient Management System designed to store and manage patients' medical history, such as medications, surgeries, and other significant health events. This system not only archives health records but also leverages Artificial Intelligence (AI) to predict future health issues by analyzing historical data. By integrating AI, the system empowers healthcare providers to make more informed decisions, promoting proactive healthcare. 
 # General info
@@ -17,7 +17,7 @@ RS Nkuna
 KD LEWELE 
 VP Baloyi 
 MLM MKABILE
-SibusisoMnamati1
+SibusisoMnamathi1
 KD Sehlabaka 
 LF Malambe
 # Technlogies

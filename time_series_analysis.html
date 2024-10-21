@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Time Series Analysis</title>
+    <style>
+        body {
+            background: linear-gradient(to right, #0e1c36, #2e0f4d); /* Dark gradient background */
+            color: #ffffff; /* White text for contrast */
+            font-family: 'Arial', sans-serif; /* Clean font */
+            margin: 0;
+            padding: 0;
+            height: 100vh; /* Full viewport height */
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden; /* Prevent scrolling */
+        }
+
+        h1 {
+            font-size: 2.5em; /* Larger font size for the heading */
+            margin-bottom: 20px; /* Spacing below the heading */
+            text-shadow: 0 0 5px #00FF00; /* Glowing text effect */
+        }
+
+        img {
+            max-width: 90%; /* Responsive image */
+            border-radius: 15px; /* Rounded corners for the image */
+            box-shadow: 0 0 15px rgba(0, 255, 0, 0.5); /* Glow effect around the image */
+            border: 2px solid #00FF00; /* Green border for the image */
+        }
+
+        /* Navbar styles */
+        #navbar {
+            background-color: rgba(28, 30, 40, 0.8); /* Semi-transparent dark background */
+            padding: 15px;
+            position: sticky;
+            top: 0;
+            display: flex;
+            justify-content: space-around; /* Space between links */
+            border-bottom: 2px solid #00FF00; /* Bottom border for the navbar */
+            box-shadow: 0 0 10px rgba(0, 255, 0, 0.5); /* Shadow effect */
+            z-index: 100;
+        }
+
+        #navbar a {
+            color: #00FF00; /* Green text color */
+            text-decoration: none; /* Remove underline */
+            font-size: 1.2em; /* Larger font for links */
+            padding: 10px 15px; /* Padding around links */
+            border-radius: 5px; /* Rounded corners for links */
+            transition: background-color 0.3s, color 0.3s; /* Smooth transition */
+        }
+
+        #navbar a:hover {
+            background-color: rgba(0, 255, 0, 0.2); /* Light green background on hover */
+            color: #ffffff; /* Change text color on hover */
+        }
+
+        /* Style for the popup message */
+        #popup {
+            visibility: hidden;
+            background-color: #4CAF50;
+            color: white;
+            text-align: center;
+            padding: 15px;
+            position: fixed;
+            top: 20px;
+            width: 100%;
+            z-index: 100;
+            font-size: 20px;
+            border-radius: 5px; /* Rounded corners */
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5); /* Shadow effect */
+        }
+
+       /* Styles for the chatbot */
+       #chatbot {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 60px;
+            height: 60px;
+            background-color: #007BFF;
+            border-radius: 50%;
+            color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            font-size: 30px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+            z-index: 1000;
+            transition: transform 0.3s;
+        }
+
+        #chatbot:hover {
+            transform: scale(1.1);
+        }
+
+        #chatbox {
+            display: none;
+            position: fixed;
+            bottom: 80px;
+            right: 20px;
+            width: 300px;
+            background-color: white;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+            z-index: 1001;
+        }
+
+        #chatbox-header {
+            background-color: #007BFF;
+            color: white;
+            padding: 10px;
+            border-top-left-radius: 8px;
+            border-top-right-radius: 8px;
+        }
+
+        #chatbox-body {
+            padding: 10px;
+            max-height: 200px;
+            overflow-y: auto;
+        }
+
+        .message {
+            margin: 5px 0;
+            padding: 5px;
+            border-radius: 5px;
+        }
+
+        .user-message {
+            background-color: #007BFF;
+            color: white;
+            text-align: right;
+        }
+
+        .bot-message {
+            background-color: #f1f1f1;
+            color: black;
+        }
+
+        .menu-button {
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            padding: 5px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 5px 0;
+        }
+
+        button {
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 18px;
+            transition: background-color 0.3s;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+     <!-- Navigation bar -->
+     <div class="navbar" id="navbar">
+        <a href="{{ url_for('view_patients') }}">View Patients</a>
+        <a href="{{ url_for('display_health_risk', name='', age='', health_risk='') }}">Health Risk</a>
+        <a href="{{ url_for('speech_recognition') }}">Speech Recognition</a>
+        <a href="{{ url_for('patient_form') }}">Go Back home</a>
+    </div>
+    
+    <h1>Time Series Analysis</h1>
+    <img src="data:image/png;base64,{{ plot_url }}" alt="Time Series Plot">
+
+    <!-- Chatbot button -->
+    <div id="chatbot">💬</div>
+    <!-- Chatbox for chatbot -->
+    <div id="chatbox">
+        <div id="chatbox-header">Chatbot</div>
+        <div id="chatbox-body">
+            <!-- Chat messages will go here -->
+        </div>
+    </div>
+
+
+    <script>
+      
+        // Chatbot functionality
+        const chatbot = document.getElementById('chatbot');
+        const chatbox = document.getElementById('chatbox');
+        const chatboxBody = document.getElementById('chatbox-body');
+        const userInput = document.getElementById('user-input');
+
+        chatbot.onclick = () => {
+            chatbox.style.display = chatbox.style.display === 'none' || chatbox.style.display === '' ? 'block' : 'none';
+            if (chatbox.style.display === 'block') {
+                chatboxBody.innerHTML = ''; // Clear previous messages
+                addMessage("Hello! How can I assist you today?", 'bot-message');
+                addMenuButton();
+            }
+        };
+
+        userInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                const userMessage = userInput.value.trim();
+                if (userMessage) {
+                    addMessage(userMessage, 'user-message');
+                    handleUserMessage(userMessage);
+                    userInput.value = '';
+                }
+            }
+        });
+
+        function addMessage(message, className) {
+            const messageDiv = document.createElement('div');
+            messageDiv.className = `message ${className}`;
+            messageDiv.innerText = message;
+            chatboxBody.appendChild(messageDiv);
+            chatboxBody.scrollTop = chatboxBody.scrollHeight; // Scroll to the bottom
+        }
+
+        function addMenuButton() {
+            const button = document.createElement('button');
+            button.className = 'menu-button';
+            button.innerText = 'Menu';
+            button.onclick = displayQuestions;
+            chatboxBody.appendChild(button);
+        }
+
+        function displayQuestions() {
+            const questions = [
+                "What is your name?",
+                "What medications are you taking?",
+                "Have you had any surgeries?",
+                "Do you have any allergies?",
+                "What is your age?"
+            ];
+            questions.forEach((question, index) => {
+                const button = document.createElement('button');
+                button.className = 'menu-button';
+                button.innerText = question;
+                button.onclick = () => handleQuestionChoice(index);
+                chatboxBody.appendChild(button);
+            });
+        }
+
+        function handleQuestionChoice(index) {
+            const responses = [
+                "Please fill out the form to get ahead.",
+                "good enter the medication on the form and fill it out for more clarity.",
+                "yes thats use the form to check risk based on your surgery.",
+                "Please mention any known allergies.",
+                "Age is an important detail; please provide it in the age input field to see the risk."
+            ];
+            addMessage(responses[index], 'bot-message');
+        }
+
+        function handleUserMessage(message) {
+            const lowerCaseMessage = message.toLowerCase();
+            if (lowerCaseMessage === "hello" || lowerCaseMessage === "hi") {
+                addMessage("Hi there! How can I assist you?", 'bot-message');
+                addMenuButton();
+            } else {
+                addMessage("I'm here to help! Please ask your question or type 'Menu' to see options.", 'bot-message');
+            }
+        }
+    </script>
+</body>
+</html>

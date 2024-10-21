@@ -22,7 +22,7 @@ KD Sehlabaka
 LF Malambe
 # Technlogies
 - Python: For backend development and integration of AI models.  
-• TensorFlow/Keras: For building the deep learning models used in predictive analysis.  
-• Scikit-learn: For machine learning algorithms.  
-• Natural Language Processing: To extract information from patient medical records.  
-• Time Series Analysis: For analyzing patient data trends and predicting future health conditions. 
+- TensorFlow/Keras: For building the deep learning models used in predictive analysis.  
+- Scikit-learn: For machine learning algorithms.  
+- Natural Language Processing: To extract information from patient medical records.  
+- Time Series Analysis: For analyzing patient data trends and predicting future health conditions. 

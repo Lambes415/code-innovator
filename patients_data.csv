@@ -1,0 +1,45 @@
+timestamp,patient_name,age,medications,surgeries,health_events
+2024-10-20 18:50:54.777084,Caswell Nziyane,24,Ibuprofen,Heart Transplant,Heart Attack
+
+2024-10-20 19:00:31.938157,qoli nziyane,31,Acetaminophen,lung transplant,cardiac arrest
+2024-10-20 19:06:46.066402,caswell nziyane,23,Warfarin,Heart Valve Replacement,Heart Palpitations
+2024-10-20 19:19:24.921157,LA MANGANYI,52,Warfarin,Heart Valve Replacement,Shortness of Breath
+2024-10-20 19:24:02.327607,thando admin,43,ibroifne,headache,fallen
+2024-10-20 19:28:41.838726,William.,34,ibroifne,Heart Valve Replacement,fallen
+2024-10-20 19:30:22.211628,Bongani Shilubane,43,Tiotropium,Lung Resection,Shortness of Breath
+2024-10-20 19:45:37.051277,thando admin,43,ibroifne,headache,fallen
+2024-10-20 19:48:16.352065,qoli nziyane,23,Tiotropium,Heart Valve Replacement,Shortness of Breath
+2024-10-20 19:52:38.225867,qoli nziyane,23,Tiotropium,Heart Valve Replacement,Shortness of Breath
+2024-10-20 20:11:20.099768,thando malamule,18,2,Lung Resection,Shortness of Breath
+2024-10-20 20:12:19.285038,thando malamule,18,2,Lung Resection,Shortness of Breath
+2024-10-20 20:12:56.809596,qoli nziyane,23,10,Heart Valve Replacement,Shortness of Breath
+2024-10-20 20:15:12.794914,qoli nziyane,23,10,Heart Valve Replacement,Shortness of Breath
+2024-10-20 20:19:11.689407,caswell Nziyane caswell Nziyane,34,8,brain surgery,Heart Palpitations
+2024-10-20 20:19:56.935374,caswell,43,9,Appendectomy,Headache
+2024-10-20 20:20:18.644547,caswell Nziyane caswell Nziyane,34,8,brain surgery,Heart Palpitations
+2024-10-20 20:20:49.741520,qoli nziyane,32,4,brain surgery,Heart Palpitations
+2024-10-20 20:21:15.806211,qoli nziyane,32,4,brain surgery,Heart Palpitations
+2024-10-20 20:23:30.024032,qoli nziyane,23,3,Heart Valve Replacement,Shortness of Breath
+2024-10-20 20:27:20.857209,thando admin,23,7,Lung Resection,Shortness of Breath
+2024-10-20 20:30:30.005899,LA MANGANYI,23,2,Heart Valve Replacement,Shortness of Breath
+2024-10-20 20:33:59.019187,padon khoza,25,10,brain surgery,Shortness of Breath
+2024-10-20 20:43:36.823270,donald trump,67,2,brain surgery,brain tumer
+2024-10-20 20:46:52.899720,jacob zuma,73,5,Heart Valve Replacement,Shortness of Breath
+2024-10-20 20:51:19.770956,jacob zuma,73,5,Heart Valve Replacement,Shortness of Breath
+2024-10-20 21:01:17.362653,qoli nziyane,23,2,Lung Resection,Shortness of Breath
+2024-10-20 21:10:07.636505,nice food,23,5,Appendectomy,Headache
+2024-10-20 21:58:03.961253,thando mbatha,22,3,Heart Valve Replacement,Shortness of Breath
+2024-10-20 22:08:18.284824,julius malema,43,5,brain surgery,brain tumer
+2024-10-20 22:11:51.413659,julius malema,23,23,Heart Valve Replacement,Shortness of Breath
+2024-10-20 22:13:48.739754,qoli nziyane,23,43,Heart Valve Replacement,Shortness of Breath
+2024-10-20 22:31:17.153348,ramaposa,67,4,Heart Valve Replacement,Shortness of Breath
+2024-10-20 22:33:12.488883,brown charlse,61,4,brain surgery,brain tumer
+2024-10-20 22:35:05.593413,brown belt,23,2,Heart Valve Replacement,brain tumer
+2024-10-20 22:36:25.550132,john cena,62,3,brain surgery,brain tumer
+2024-10-20 22:36:53.315646,mandela,90,9,brain surgery,Shortness of Breath
+2024-10-21 02:54:32.514956,qoli nziyane,34,3,brain surgery,brain tumer
+2024-10-21 03:43:10.873907,vhera khoza,27,4,none,none
+2024-10-21 03:43:59.501004,hope khoza,27,3,brain surgery,brain tumer
+2024-10-21 03:51:43.182804,carol,32,3,plastic surgery,beauty
+2024-10-21 03:52:13.798240,john cena,64,4,Heart Valve Replacement,beauty
+2024-10-21 03:56:40.449885,caswell nziyane,24,3,none,lip inflamation

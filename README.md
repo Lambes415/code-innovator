@@ -17,7 +17,7 @@ RS Nkuna
 KD LEWELE 
 VP Baloyi 
 MLM MKABILE
-SM Mnamati 
+SibusisoMnamati1
 KD Sehlabaka 
 LF Malambe
 # Technlogies
